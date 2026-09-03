@@ -4,6 +4,22 @@ Cardápio de bebidas do Mápoli publicado como página estática. A arte é a me
 do impresso (100 × 220 mm), em SVG, então o texto continua vetor: amplia sem
 borrar e é selecionável.
 
+A página abre com um preloader de cortina (a assinatura da marca preenchendo de
+baixo pra cima, no mesmo espírito do site institucional), revela a **capa** e
+tem um botão que **vira o cartão em 3D** pro verso e de volta. Clicar no próprio
+cartão também vira.
+
+## Arquivos em `svg/`
+
+| arquivo | o que é |
+|---|---|
+| `Capa.svg` | frente do cardápio |
+| `Verso.svg` | verso, com os itens e preços |
+| `assinatura.svg` | marca (3 estrelas + MAPOLI) usada no preloader |
+
+`assinatura.svg` é a versão vetorial da mesma marca que está embutida como PNG
+dentro da `Capa.svg`. O logotipo não tem acento no "A" — é assim mesmo.
+
 ## Como atualizar o cardápio
 
 1. Exporte a nova arte do Illustrator em SVG e substitua `svg/Capa.svg` e/ou
