@@ -84,7 +84,7 @@ const html = `<!doctype html>
 <meta property="og:description" content="Comer bem, todo dia. Almoço 11h30 às 14h, jantar 19h às 23h." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;600;700&display=swap" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500;600&display=swap" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='16' fill='%23442924'/%3E%3Ctext x='50' y='73' font-family='serif' font-size='68' font-weight='700' text-anchor='middle' fill='%23f7eeeb'%3EM%3C/text%3E%3C/svg%3E" />
 <style>
   :root {
