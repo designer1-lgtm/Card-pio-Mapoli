@@ -4,560 +4,70 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>Mápoli — Cardápio de Bebidas</title>
-<meta name="description" content="Cardápio de bebidas do Mápoli: refrigerantes, águas, sucos, cervejas, vinhos e drinks. Segunda a sábado, almoço 11h30 às 14h e jantar 19h às 23h." />
+<meta name="description" content="O cardápio de bebidas do Mápoli está temporariamente indisponível." />
+<meta name="robots" content="noindex" />
 <meta name="theme-color" content="#442924" />
-<meta property="og:type" content="website" />
-<meta property="og:title" content="Mápoli — Cardápio de Bebidas" />
-<meta property="og:description" content="Comer bem, todo dia. Almoço 11h30 às 14h, jantar 19h às 23h." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500;600&display=swap" />
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='16' fill='%23442924'/%3E%3Ctext x='50' y='73' font-family='serif' font-size='68' font-weight='700' text-anchor='middle' fill='%23f7eeeb'%3EM%3C/text%3E%3C/svg%3E" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;600&display=swap" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='16' fill='%23442924'/%3E%3Ctext x='50' y='73' font-family='serif' font-size='68' font-weight='700' text-anchor='middle' fill='%23e73439'%3EM%3C/text%3E%3C/svg%3E" />
 <style>
-  :root {
-    --bg: #2a1813;
-    --card: #442924;
-    --ink: #f7eeeb;
-    --tan: #d7c0ad;
-    --red: #e73439;
-    --page-ratio: 283.46 / 623.62;
-    --flip: .95s cubic-bezier(.66, .01, .28, 1);
-  }
+  :root { --brown: #442924; --cream: #f7eeeb; --tan: #d7c0ad; --red: #e73439; }
 
   * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
 
-  html, body {
-    margin: 0;
-    height: 100%;
-    background: var(--bg);
-    color: var(--ink);
+  body {
+    background: radial-gradient(120% 75% at 50% 0%, #56342d 0%, var(--brown) 48%, #3a211c 100%) #3a211c;
+    color: var(--cream);
     font-family: 'IBM Plex Serif', Georgia, serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px max(24px, env(safe-area-inset-left)) calc(32px + env(safe-area-inset-bottom));
     -webkit-text-size-adjust: 100%;
   }
 
-  body {
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
-
-  /* ===================== PRELOADER ===================== */
-
-  .preloader {
-    position: fixed;
-    inset: 0;
-    z-index: 1000;
-    background: var(--card);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    transition: transform 1s cubic-bezier(.76, 0, .24, 1);
-  }
-  .preloader.is-done {
-    transform: translateY(-100%);
-    pointer-events: none;
-  }
-
-  .preloader__center {
+  main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: clamp(16px, 2.4vw, 30px);
-    padding: 0 24px;
-  }
-
-  .preloader__logo {
-    position: relative;
-    width: clamp(190px, 34vw, 400px);
-    opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 1s ease, transform 1.1s cubic-bezier(.22, 1, .36, 1);
-  }
-  .preloader__logo svg { display: block; height: auto; aspect-ratio: 780 / 252; }
-
-  /* A camada fantasma segura o tamanho da caixa; a solida preenche
-     de baixo pra cima conforme --fill vai de 0% a 100%. */
-  .preloader__ghost { color: rgba(247, 238, 235, .15); }
-  .preloader__fill {
-    position: absolute;
-    inset: 0;
-    color: var(--red);
-    clip-path: inset(calc(100% - var(--fill, 0%)) 0 0 0);
-    transition: clip-path .35s cubic-bezier(.22, 1, .36, 1);
-  }
-
-  .preloader__tagline {
-    margin: 0;
-    color: var(--tan);
-    font-size: clamp(11px, 1.5vw, 17px);
-    letter-spacing: .34em;
-    text-transform: lowercase;
+    gap: clamp(26px, 5vw, 38px);
     text-align: center;
-    opacity: 0;
-    transform: translateY(18px);
-    transition: opacity 1s ease .18s, transform 1.1s cubic-bezier(.22, 1, .36, 1) .18s;
+    max-width: 420px;
+    animation: sobe .8s cubic-bezier(.22, 1, .36, 1) both;
   }
 
-  .preloader__count {
-    position: absolute;
-    right: clamp(20px, 4vw, 52px);
-    bottom: clamp(16px, 3.4vw, 40px);
-    display: flex;
-    align-items: baseline;
-    color: var(--ink);
-    line-height: .9;
-    opacity: 0;
-    transform: translateY(18px);
-    transition: opacity 1s ease .1s, transform 1.1s cubic-bezier(.22, 1, .36, 1) .1s;
-  }
-  .preloader__num { font-size: clamp(56px, 10vw, 150px); font-variant-numeric: tabular-nums; }
-  .preloader__pct { font-size: clamp(24px, 4vw, 60px); margin-left: .06em; }
+  .marca { width: clamp(170px, 48vw, 240px); color: var(--red); }
+  .marca svg { display: block; width: 100%; height: auto; aspect-ratio: 780 / 252; }
 
-  .preloader.is-in .preloader__logo,
-  .preloader.is-in .preloader__tagline,
-  .preloader.is-in .preloader__count {
-    opacity: 1;
-    transform: none;
-  }
+  .risco { width: 46px; height: 1px; background: var(--tan); opacity: .45; }
 
-  /* ===================== CARTAO ===================== */
+  h1 { margin: 0; font-size: clamp(19px, 5vw, 24px); font-weight: 600; line-height: 1.3; }
+  p { margin: 0; color: var(--tan); font-size: clamp(14px, 3.7vw, 16px); line-height: 1.65; }
 
-  .stage {
-    flex: 1;
-    min-height: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 24px max(20px, env(safe-area-inset-left)) 12px;
-  }
-
-  /* O deck guarda a proporcao exata da arte (100 x 220 mm) e cresce ate onde a
-     altura permitir. A perspectiva mora aqui pra so o flipper girar. */
-  .deck {
-    aspect-ratio: var(--page-ratio);
-    height: 100%;
-    max-width: 100%;
-    perspective: 1900px;
-    opacity: 0;
-    transform: translateY(22px);
-    transition: opacity .9s ease, transform 1s cubic-bezier(.22, 1, .36, 1);
-  }
-  .deck.is-in { opacity: 1; transform: none; }
-
-  .flipper {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    transform-style: preserve-3d;
-    transition: transform var(--flip);
-    cursor: pointer;
-  }
-  .flipper.is-flipped { transform: rotateY(-180deg); }
-
-  .face {
-    position: absolute;
-    inset: 0;
-    border-radius: 10px;
-    overflow: hidden;
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    box-shadow: 0 18px 50px rgba(0, 0, 0, .45);
-    line-height: 0;
-  }
-  .face svg { display: block; }
-  .face--front { background: var(--card); }
-  .face--back { background: var(--tan); transform: rotateY(180deg); }
-
-  /* ===================== BOTAO ===================== */
-
-  .bar {
-    flex: 0 0 auto;
-    display: flex;
-    justify-content: center;
-    padding: 8px 16px calc(16px + env(safe-area-inset-bottom));
-    opacity: 0;
-    transition: opacity .9s ease .15s;
-  }
-  .bar.is-in { opacity: 1; }
-
-  .bar button {
-    appearance: none;
-    border: 1px solid rgba(215, 192, 173, .32);
-    background: transparent;
-    color: var(--tan);
-    font: 600 13px/1 'IBM Plex Serif', Georgia, serif;
-    letter-spacing: .16em;
-    text-transform: uppercase;
-    padding: 12px 30px;
-    border-radius: 999px;
-    cursor: pointer;
-    transition: background .22s ease, color .22s ease, border-color .22s ease;
-  }
-  .bar button:hover {
-    background: var(--tan);
-    border-color: var(--tan);
-    color: var(--card);
-  }
-  .bar button:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
-
-  /* Sem animacao: a virada e instantanea e a cortina some sem deslizar. */
-  @media (prefers-reduced-motion: reduce) {
-    .flipper, .deck, .bar, .preloader, .preloader__logo,
-    .preloader__tagline, .preloader__count, .preloader__fill,
-    .bar button { transition: none; }
-    .preloader.is-done { transform: none; opacity: 0; visibility: hidden; }
-  }
-
-  /* ===== capa ===== */
-  #capa .cls-1 {letter-spacing: -.04em;}
-  #capa .cls-2 {font-size: 15.76px;}
-  #capa .cls-2, #capa .cls-3, #capa .cls-4 {opacity: .76;}
-  #capa .cls-2, #capa .cls-5 {fill: #f6f1ed; font-family: IBMPlexSerif-SemiBold, 'IBM Plex Serif'; font-weight: 600;}
-  #capa .cls-6, #capa .cls-7 {fill: #e7353a;}
-  #capa .cls-8 {letter-spacing: 0em;}
-  #capa .cls-3 {font-size: 9.45px;}
-  #capa .cls-3, #capa .cls-4 {fill: #f7eeeb; font-family: IBMPlexSerif-Regular, 'IBM Plex Serif';}
-  #capa .cls-9 {letter-spacing: 0em;}
-  #capa .cls-10 {letter-spacing: 0em;}
-  #capa .cls-11 {letter-spacing: 0em;}
-  #capa .cls-12 {letter-spacing: .01em;}
-  #capa .cls-13 {letter-spacing: 0em;}
-  #capa .cls-7 {fill-rule: evenodd;}
-  #capa .cls-14 {letter-spacing: 0em;}
-  #capa .cls-15 {fill: none; opacity: .6; stroke: #d7c0ae; stroke-miterlimit: 10;}
-  #capa .cls-16 {letter-spacing: -.01em;}
-  #capa .cls-17 {fill: #442924;}
-  #capa .cls-18 {letter-spacing: 0em;}
-  #capa .cls-19 {letter-spacing: -.01em;}
-  #capa .cls-20 {letter-spacing: 0em;}
-  #capa .cls-21 {letter-spacing: .01em;}
-  #capa .cls-22 {letter-spacing: 0em;}
-  #capa .cls-23 {letter-spacing: -.01em;}
-  #capa .cls-5 {font-size: 14px;}
-  #capa .cls-4 {font-size: 11.03px;}
-
-      
-  /* ===== verso ===== */
-  #verso .cls-1 {letter-spacing: .09em;}
-  #verso .cls-2 {letter-spacing: .1em;}
-  #verso .cls-3 {letter-spacing: .09em;}
-  #verso .cls-4, #verso .cls-5, #verso .cls-6, #verso .cls-7, #verso .cls-8, #verso .cls-9, #verso .cls-10, #verso .cls-11, #verso .cls-12, #verso .cls-13 {font-family: IBMPlexSerif-Regular, 'IBM Plex Serif';}
-  #verso .cls-4, #verso .cls-14, #verso .cls-15 {letter-spacing: .1em;}
-  #verso .cls-16 {font-size: 10px;}
-  #verso .cls-16, #verso .cls-17, #verso .cls-18, #verso .cls-19, #verso .cls-20, #verso .cls-21, #verso .cls-15 {font-family: IBMPlexSerif-SemiBold, 'IBM Plex Serif'; font-weight: 600;}
-  #verso .cls-16, #verso .cls-9, #verso .cls-18, #verso .cls-22, #verso .cls-20, #verso .cls-23, #verso .cls-24, #verso .cls-11, #verso .cls-25, #verso .cls-13 {fill: #442924;}
-  #verso .cls-26 {letter-spacing: .09em;}
-  #verso .cls-27 {fill: #d7c0ad;}
-  #verso .cls-28 {letter-spacing: .09em;}
-  #verso .cls-29 {letter-spacing: .07em;}
-  #verso .cls-17 {letter-spacing: .09em;}
-  #verso .cls-30 {letter-spacing: .1em;}
-  #verso .cls-5 {letter-spacing: .09em;}
-  #verso .cls-31 {letter-spacing: .1em;}
-  #verso .cls-32, #verso .cls-33 {fill: #e7353a;}
-  #verso .cls-34 {letter-spacing: .11em;}
-  #verso .cls-7, #verso .cls-35 {letter-spacing: .09em;}
-  #verso .cls-36, #verso .cls-19, #verso .cls-12 {letter-spacing: .1em;}
-  #verso .cls-8, #verso .cls-37 {letter-spacing: .08em;}
-  #verso .cls-38 {letter-spacing: .12em;}
-  #verso .cls-9, #verso .cls-24 {font-size: 7px;}
-  #verso .cls-39 {letter-spacing: .11em;}
-  #verso .cls-18 {font-size: 9px;}
-  #verso .cls-40 {letter-spacing: .07em;}
-  #verso .cls-41 {letter-spacing: .09em;}
-  #verso .cls-42 {letter-spacing: .08em;}
-  #verso .cls-43 {letter-spacing: .09em;}
-  #verso .cls-44 {letter-spacing: .11em;}
-  #verso .cls-45 {letter-spacing: .12em;}
-  #verso .cls-33 {fill-rule: evenodd;}
-  #verso .cls-46 {letter-spacing: .07em;}
-  #verso .cls-22, #verso .cls-23, #verso .cls-11, #verso .cls-25, #verso .cls-13 {font-size: 6px;}
-  #verso .cls-22, #verso .cls-23, #verso .cls-25 {font-family: IBMPlexSerif-Medium, 'IBM Plex Serif'; font-weight: 500;}
-  #verso .cls-22, #verso .cls-47 {letter-spacing: .1em;}
-  #verso .cls-20 {font-size: 8px;}
-  #verso .cls-48, #verso .cls-21 {letter-spacing: .11em;}
-  #verso .cls-23, #verso .cls-49 {letter-spacing: .1em;}
-  #verso .cls-50 {letter-spacing: .11em;}
-  #verso .cls-51 {letter-spacing: .11em;}
-  #verso .cls-52 {letter-spacing: .1em;}
-  #verso .cls-53 {letter-spacing: .1em;}
-  #verso .cls-54 {letter-spacing: .1em;}
-  #verso .cls-55 {letter-spacing: .08em;}
-  #verso .cls-56 {letter-spacing: .1em;}
-  #verso .cls-57 {letter-spacing: .05em;}
-  #verso .cls-58 {letter-spacing: .09em;}
-  #verso .cls-59 {letter-spacing: .08em;}
-  #verso .cls-60 {letter-spacing: .1em;}
-  #verso .cls-10 {letter-spacing: .1em;}
-  #verso .cls-61 {letter-spacing: .1em;}
-  #verso .cls-62 {letter-spacing: .09em;}
-  #verso .cls-63 {letter-spacing: .09em;}
-  #verso .cls-64 {letter-spacing: .13em;}
-  #verso .cls-65 {letter-spacing: .08em;}
-  #verso .cls-66 {letter-spacing: .1em;}
-  #verso .cls-67 {letter-spacing: .09em;}
-  #verso .cls-68 {letter-spacing: .08em;}
-  #verso .cls-13 {opacity: .68;}
-  #verso .cls-69 {letter-spacing: .09em;}
-  #verso .cls-70 {letter-spacing: .09em;}
-  #verso .cls-71 {letter-spacing: .11em;}
-  #verso .cls-72 {letter-spacing: .08em;}
-  #verso .cls-73 {fill: none; opacity: .6; stroke: #442924; stroke-miterlimit: 10;}
-  #verso .cls-74 {letter-spacing: .06em;}
-
-      
+  @keyframes sobe { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { main { animation: none; } }
 </style>
 </head>
 <body>
-
-<div class="preloader" id="preloader" role="status" aria-label="Carregando o cardápio">
-  <div class="preloader__center">
-    <div class="preloader__logo">
-      <div class="preloader__ghost" aria-hidden="true">
-        <svg width="100%" height="auto" viewBox="0 0 780 252" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M510.841 14.9873C511.972 13.7857 514.022 14.21 514.447 15.8359L519.467 33.7949C519.608 34.4312 520.104 34.9262 520.669 35.209L536.577 41.8555C538.062 42.4918 538.345 44.471 537.072 45.4609L522.225 57.0566C521.801 57.3395 521.517 57.8348 521.447 58.4004L519.113 74.7324C518.901 76.2172 517.133 77.0662 515.861 76.2178L501.084 66.7432C500.66 66.3897 500.235 66.3896 499.74 66.3896L482.277 68.0869C480.792 68.2283 479.589 66.8138 480.084 65.3291L485.388 49.7744C485.6 49.2795 485.529 48.7136 485.317 48.2188L485.246 48.1475L477.256 31.0371C476.549 29.6231 477.681 27.927 479.307 28.0684L496.488 29.4111C497.125 29.411 497.761 29.1989 498.185 28.7041L510.841 14.9873Z" fill="currentColor"/>
-        <path d="M265.433 13.6416C265.928 12.0862 267.907 11.5911 269.038 12.793L281.695 26.5098C282.119 27.0046 282.756 27.2168 283.392 27.2168L300.572 25.873C302.128 25.7317 303.33 27.358 302.623 28.8428L294.633 45.9531C294.421 46.448 294.421 47.0139 294.563 47.5088L299.865 63.0635C300.36 64.4774 299.229 65.9624 297.674 65.8213L280.21 64.124C279.715 64.124 279.291 64.1948 278.866 64.4775L264.089 73.9521C262.746 74.8004 261.05 73.9522 260.837 72.4678L258.503 56.1348C258.432 55.6398 258.15 55.1445 257.726 54.791L257.655 54.8623L242.807 43.2666C241.534 42.2767 241.817 40.2965 243.302 39.6602L259.21 33.0146C259.776 32.7319 260.271 32.2367 260.412 31.6006L265.433 13.6416Z" fill="currentColor"/>
-        <path d="M388.102 1.06055C388.88 -0.353505 391.001 -0.353526 391.779 1.06055L400.828 17.3926C401.111 17.9581 401.676 18.3833 402.313 18.4541L419.282 21.2109C420.908 21.494 421.615 23.3319 420.625 24.6045L408.889 39.3818C408.606 39.8061 408.464 40.3016 408.464 40.8672L410.02 57.2705C410.232 58.8259 408.747 59.9568 407.262 59.4619L390.647 53.6641C390.152 53.5227 389.657 53.5227 389.233 53.6641L372.617 59.4619C371.203 59.9568 369.718 58.8259 369.86 57.2705L371.415 40.8672C371.486 40.3723 371.345 39.8061 370.991 39.3818L359.254 24.6045C358.265 23.3318 358.972 21.4937 360.598 21.2109L377.567 18.4541C378.203 18.3127 378.768 17.9582 379.051 17.3926L388.102 1.06055Z" fill="currentColor"/>
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M540.72 106.3C581.93 106.3 609.26 132.013 609.26 173.435C609.26 212.893 581.93 240.937 540.72 240.938C499.51 240.937 471.995 215.041 471.995 173.619C471.995 134.345 500.062 106.3 540.72 106.3ZM539.86 127.165C521.62 127.471 510.135 144.961 510.626 173.926C511.179 203.566 523.278 220.135 541.518 219.828H541.457C559.513 219.521 570.998 202.338 570.507 172.882C570.015 143.427 558.101 126.858 539.86 127.165Z" fill="currentColor"/>
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M408.981 108.759C441.163 108.759 461.983 124.04 461.983 151.348C461.983 178.655 437.662 195.531 409.165 195.531H389.943V229.098L394.18 233.762C395.838 235.603 394.548 238.487 392.092 238.487H350.021C347.565 238.487 346.276 235.603 347.934 233.762L352.233 229.037V118.148L347.934 113.423C346.276 111.582 347.565 108.698 350.021 108.698H408.981V108.759ZM389.881 171.046H410.025C422.431 171.046 432.872 164.296 432.872 149.077C432.872 133.858 420.712 130.606 405.91 130.606H389.881V171.046Z" fill="currentColor"/>
-        <path d="M664.101 108.631C666.557 108.631 667.847 111.515 666.189 113.356L661.767 118.204V201.049L662.135 215.899L712.62 204.608H712.681C715.26 204.24 717.471 206.387 717.226 208.964L714.585 236.518C714.462 237.561 713.602 238.359 712.559 238.359H652.37V238.482H621.724C619.267 238.482 617.977 235.597 619.635 233.756L623.996 228.908V118.204L619.635 113.356C617.977 111.515 619.267 108.631 621.724 108.631H664.101Z" fill="currentColor"/>
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M287.44 108.698C291.248 108.698 294.626 111.091 295.854 114.65L335.406 228.791H335.468L335.529 228.853L339.951 233.701C341.609 235.542 340.319 238.426 337.863 238.426H292.722C290.266 238.426 288.976 235.542 290.634 233.701L295.056 228.853H295.24L289.897 211.179H245.923L240.641 229.037L244.879 233.701C246.537 235.542 245.247 238.426 242.791 238.426H199.553C197.097 238.426 195.807 235.542 197.465 233.701L201.887 228.853L240.395 118.271L235.973 113.423C234.315 111.582 235.605 108.698 238.062 108.698H287.44ZM267.111 134.656C267.111 135.637 266.497 138.768 265.515 141.713L251.942 186.633L259.189 190.254C264.593 193.015 271.042 193.015 276.508 190.254H276.631L283.878 186.633L270.305 141.713C269.507 138.767 268.708 135.637 268.708 134.656H267.111Z" fill="currentColor"/>
-        <path d="M769.981 108.698C772.622 108.698 774.771 110.846 774.771 113.485V228.791L779.193 233.639L779.255 233.701C780.913 235.542 779.623 238.426 777.167 238.426H734.79C732.333 238.426 731.043 235.542 732.701 233.701L737.123 228.853V118.271L732.701 113.423C731.043 111.582 732.333 108.698 734.79 108.698H769.981Z" fill="currentColor"/>
-        <path d="M61.6087 108.574C65.6007 108.574 69.102 111.212 70.146 115.078L93.2996 200.623C94.2822 204.489 94.4664 207.25 94.4664 208.048H96.2476C96.2476 207.312 96.6165 204.55 97.5992 200.623L120.569 115.14C121.613 111.335 125.113 108.635 129.105 108.635H174.492C176.949 108.635 178.238 111.519 176.58 113.36L172.65 117.717L184.442 228.912L184.503 228.851L188.802 233.576C190.46 235.417 189.171 238.301 186.714 238.301H143.354C140.898 238.301 139.608 235.417 141.266 233.576L145.688 228.728L140.099 149.811H138.502C138.318 150.977 138.134 154.107 137.335 157.667L114.365 238.301H73.5235L50.7383 157.667C50.0013 154.107 49.5715 150.977 49.3873 149.811H47.7903L42.3239 228.851L46.6235 233.576C48.2815 235.417 46.9917 238.301 44.5352 238.301H2.83358C0.376927 238.301 -0.912951 235.417 0.74529 233.576L5.16724 228.728L16.8979 117.901L12.7213 113.299C11.0632 111.458 12.3531 108.574 14.8096 108.574H61.6087Z" fill="currentColor"/>
-        </svg>
-      </div>
-      <div class="preloader__fill" id="fill" aria-hidden="true">
-        <svg width="100%" height="auto" viewBox="0 0 780 252" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M510.841 14.9873C511.972 13.7857 514.022 14.21 514.447 15.8359L519.467 33.7949C519.608 34.4312 520.104 34.9262 520.669 35.209L536.577 41.8555C538.062 42.4918 538.345 44.471 537.072 45.4609L522.225 57.0566C521.801 57.3395 521.517 57.8348 521.447 58.4004L519.113 74.7324C518.901 76.2172 517.133 77.0662 515.861 76.2178L501.084 66.7432C500.66 66.3897 500.235 66.3896 499.74 66.3896L482.277 68.0869C480.792 68.2283 479.589 66.8138 480.084 65.3291L485.388 49.7744C485.6 49.2795 485.529 48.7136 485.317 48.2188L485.246 48.1475L477.256 31.0371C476.549 29.6231 477.681 27.927 479.307 28.0684L496.488 29.4111C497.125 29.411 497.761 29.1989 498.185 28.7041L510.841 14.9873Z" fill="currentColor"/>
-        <path d="M265.433 13.6416C265.928 12.0862 267.907 11.5911 269.038 12.793L281.695 26.5098C282.119 27.0046 282.756 27.2168 283.392 27.2168L300.572 25.873C302.128 25.7317 303.33 27.358 302.623 28.8428L294.633 45.9531C294.421 46.448 294.421 47.0139 294.563 47.5088L299.865 63.0635C300.36 64.4774 299.229 65.9624 297.674 65.8213L280.21 64.124C279.715 64.124 279.291 64.1948 278.866 64.4775L264.089 73.9521C262.746 74.8004 261.05 73.9522 260.837 72.4678L258.503 56.1348C258.432 55.6398 258.15 55.1445 257.726 54.791L257.655 54.8623L242.807 43.2666C241.534 42.2767 241.817 40.2965 243.302 39.6602L259.21 33.0146C259.776 32.7319 260.271 32.2367 260.412 31.6006L265.433 13.6416Z" fill="currentColor"/>
-        <path d="M388.102 1.06055C388.88 -0.353505 391.001 -0.353526 391.779 1.06055L400.828 17.3926C401.111 17.9581 401.676 18.3833 402.313 18.4541L419.282 21.2109C420.908 21.494 421.615 23.3319 420.625 24.6045L408.889 39.3818C408.606 39.8061 408.464 40.3016 408.464 40.8672L410.02 57.2705C410.232 58.8259 408.747 59.9568 407.262 59.4619L390.647 53.6641C390.152 53.5227 389.657 53.5227 389.233 53.6641L372.617 59.4619C371.203 59.9568 369.718 58.8259 369.86 57.2705L371.415 40.8672C371.486 40.3723 371.345 39.8061 370.991 39.3818L359.254 24.6045C358.265 23.3318 358.972 21.4937 360.598 21.2109L377.567 18.4541C378.203 18.3127 378.768 17.9582 379.051 17.3926L388.102 1.06055Z" fill="currentColor"/>
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M540.72 106.3C581.93 106.3 609.26 132.013 609.26 173.435C609.26 212.893 581.93 240.937 540.72 240.938C499.51 240.937 471.995 215.041 471.995 173.619C471.995 134.345 500.062 106.3 540.72 106.3ZM539.86 127.165C521.62 127.471 510.135 144.961 510.626 173.926C511.179 203.566 523.278 220.135 541.518 219.828H541.457C559.513 219.521 570.998 202.338 570.507 172.882C570.015 143.427 558.101 126.858 539.86 127.165Z" fill="currentColor"/>
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M408.981 108.759C441.163 108.759 461.983 124.04 461.983 151.348C461.983 178.655 437.662 195.531 409.165 195.531H389.943V229.098L394.18 233.762C395.838 235.603 394.548 238.487 392.092 238.487H350.021C347.565 238.487 346.276 235.603 347.934 233.762L352.233 229.037V118.148L347.934 113.423C346.276 111.582 347.565 108.698 350.021 108.698H408.981V108.759ZM389.881 171.046H410.025C422.431 171.046 432.872 164.296 432.872 149.077C432.872 133.858 420.712 130.606 405.91 130.606H389.881V171.046Z" fill="currentColor"/>
-        <path d="M664.101 108.631C666.557 108.631 667.847 111.515 666.189 113.356L661.767 118.204V201.049L662.135 215.899L712.62 204.608H712.681C715.26 204.24 717.471 206.387 717.226 208.964L714.585 236.518C714.462 237.561 713.602 238.359 712.559 238.359H652.37V238.482H621.724C619.267 238.482 617.977 235.597 619.635 233.756L623.996 228.908V118.204L619.635 113.356C617.977 111.515 619.267 108.631 621.724 108.631H664.101Z" fill="currentColor"/>
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M287.44 108.698C291.248 108.698 294.626 111.091 295.854 114.65L335.406 228.791H335.468L335.529 228.853L339.951 233.701C341.609 235.542 340.319 238.426 337.863 238.426H292.722C290.266 238.426 288.976 235.542 290.634 233.701L295.056 228.853H295.24L289.897 211.179H245.923L240.641 229.037L244.879 233.701C246.537 235.542 245.247 238.426 242.791 238.426H199.553C197.097 238.426 195.807 235.542 197.465 233.701L201.887 228.853L240.395 118.271L235.973 113.423C234.315 111.582 235.605 108.698 238.062 108.698H287.44ZM267.111 134.656C267.111 135.637 266.497 138.768 265.515 141.713L251.942 186.633L259.189 190.254C264.593 193.015 271.042 193.015 276.508 190.254H276.631L283.878 186.633L270.305 141.713C269.507 138.767 268.708 135.637 268.708 134.656H267.111Z" fill="currentColor"/>
-        <path d="M769.981 108.698C772.622 108.698 774.771 110.846 774.771 113.485V228.791L779.193 233.639L779.255 233.701C780.913 235.542 779.623 238.426 777.167 238.426H734.79C732.333 238.426 731.043 235.542 732.701 233.701L737.123 228.853V118.271L732.701 113.423C731.043 111.582 732.333 108.698 734.79 108.698H769.981Z" fill="currentColor"/>
-        <path d="M61.6087 108.574C65.6007 108.574 69.102 111.212 70.146 115.078L93.2996 200.623C94.2822 204.489 94.4664 207.25 94.4664 208.048H96.2476C96.2476 207.312 96.6165 204.55 97.5992 200.623L120.569 115.14C121.613 111.335 125.113 108.635 129.105 108.635H174.492C176.949 108.635 178.238 111.519 176.58 113.36L172.65 117.717L184.442 228.912L184.503 228.851L188.802 233.576C190.46 235.417 189.171 238.301 186.714 238.301H143.354C140.898 238.301 139.608 235.417 141.266 233.576L145.688 228.728L140.099 149.811H138.502C138.318 150.977 138.134 154.107 137.335 157.667L114.365 238.301H73.5235L50.7383 157.667C50.0013 154.107 49.5715 150.977 49.3873 149.811H47.7903L42.3239 228.851L46.6235 233.576C48.2815 235.417 46.9917 238.301 44.5352 238.301H2.83358C0.376927 238.301 -0.912951 235.417 0.74529 233.576L5.16724 228.728L16.8979 117.901L12.7213 113.299C11.0632 111.458 12.3531 108.574 14.8096 108.574H61.6087Z" fill="currentColor"/>
-        </svg>
-      </div>
+  <main>
+    <div class="marca">
+      <svg width="100%" height="auto" viewBox="0 0 780 252" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M510.841 14.9873C511.972 13.7857 514.022 14.21 514.447 15.8359L519.467 33.7949C519.608 34.4312 520.104 34.9262 520.669 35.209L536.577 41.8555C538.062 42.4918 538.345 44.471 537.072 45.4609L522.225 57.0566C521.801 57.3395 521.517 57.8348 521.447 58.4004L519.113 74.7324C518.901 76.2172 517.133 77.0662 515.861 76.2178L501.084 66.7432C500.66 66.3897 500.235 66.3896 499.74 66.3896L482.277 68.0869C480.792 68.2283 479.589 66.8138 480.084 65.3291L485.388 49.7744C485.6 49.2795 485.529 48.7136 485.317 48.2188L485.246 48.1475L477.256 31.0371C476.549 29.6231 477.681 27.927 479.307 28.0684L496.488 29.4111C497.125 29.411 497.761 29.1989 498.185 28.7041L510.841 14.9873Z" fill="currentColor"/>
+      <path d="M265.433 13.6416C265.928 12.0862 267.907 11.5911 269.038 12.793L281.695 26.5098C282.119 27.0046 282.756 27.2168 283.392 27.2168L300.572 25.873C302.128 25.7317 303.33 27.358 302.623 28.8428L294.633 45.9531C294.421 46.448 294.421 47.0139 294.563 47.5088L299.865 63.0635C300.36 64.4774 299.229 65.9624 297.674 65.8213L280.21 64.124C279.715 64.124 279.291 64.1948 278.866 64.4775L264.089 73.9521C262.746 74.8004 261.05 73.9522 260.837 72.4678L258.503 56.1348C258.432 55.6398 258.15 55.1445 257.726 54.791L257.655 54.8623L242.807 43.2666C241.534 42.2767 241.817 40.2965 243.302 39.6602L259.21 33.0146C259.776 32.7319 260.271 32.2367 260.412 31.6006L265.433 13.6416Z" fill="currentColor"/>
+      <path d="M388.102 1.06055C388.88 -0.353505 391.001 -0.353526 391.779 1.06055L400.828 17.3926C401.111 17.9581 401.676 18.3833 402.313 18.4541L419.282 21.2109C420.908 21.494 421.615 23.3319 420.625 24.6045L408.889 39.3818C408.606 39.8061 408.464 40.3016 408.464 40.8672L410.02 57.2705C410.232 58.8259 408.747 59.9568 407.262 59.4619L390.647 53.6641C390.152 53.5227 389.657 53.5227 389.233 53.6641L372.617 59.4619C371.203 59.9568 369.718 58.8259 369.86 57.2705L371.415 40.8672C371.486 40.3723 371.345 39.8061 370.991 39.3818L359.254 24.6045C358.265 23.3318 358.972 21.4937 360.598 21.2109L377.567 18.4541C378.203 18.3127 378.768 17.9582 379.051 17.3926L388.102 1.06055Z" fill="currentColor"/>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M540.72 106.3C581.93 106.3 609.26 132.013 609.26 173.435C609.26 212.893 581.93 240.937 540.72 240.938C499.51 240.937 471.995 215.041 471.995 173.619C471.995 134.345 500.062 106.3 540.72 106.3ZM539.86 127.165C521.62 127.471 510.135 144.961 510.626 173.926C511.179 203.566 523.278 220.135 541.518 219.828H541.457C559.513 219.521 570.998 202.338 570.507 172.882C570.015 143.427 558.101 126.858 539.86 127.165Z" fill="currentColor"/>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M408.981 108.759C441.163 108.759 461.983 124.04 461.983 151.348C461.983 178.655 437.662 195.531 409.165 195.531H389.943V229.098L394.18 233.762C395.838 235.603 394.548 238.487 392.092 238.487H350.021C347.565 238.487 346.276 235.603 347.934 233.762L352.233 229.037V118.148L347.934 113.423C346.276 111.582 347.565 108.698 350.021 108.698H408.981V108.759ZM389.881 171.046H410.025C422.431 171.046 432.872 164.296 432.872 149.077C432.872 133.858 420.712 130.606 405.91 130.606H389.881V171.046Z" fill="currentColor"/>
+      <path d="M664.101 108.631C666.557 108.631 667.847 111.515 666.189 113.356L661.767 118.204V201.049L662.135 215.899L712.62 204.608H712.681C715.26 204.24 717.471 206.387 717.226 208.964L714.585 236.518C714.462 237.561 713.602 238.359 712.559 238.359H652.37V238.482H621.724C619.267 238.482 617.977 235.597 619.635 233.756L623.996 228.908V118.204L619.635 113.356C617.977 111.515 619.267 108.631 621.724 108.631H664.101Z" fill="currentColor"/>
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M287.44 108.698C291.248 108.698 294.626 111.091 295.854 114.65L335.406 228.791H335.468L335.529 228.853L339.951 233.701C341.609 235.542 340.319 238.426 337.863 238.426H292.722C290.266 238.426 288.976 235.542 290.634 233.701L295.056 228.853H295.24L289.897 211.179H245.923L240.641 229.037L244.879 233.701C246.537 235.542 245.247 238.426 242.791 238.426H199.553C197.097 238.426 195.807 235.542 197.465 233.701L201.887 228.853L240.395 118.271L235.973 113.423C234.315 111.582 235.605 108.698 238.062 108.698H287.44ZM267.111 134.656C267.111 135.637 266.497 138.768 265.515 141.713L251.942 186.633L259.189 190.254C264.593 193.015 271.042 193.015 276.508 190.254H276.631L283.878 186.633L270.305 141.713C269.507 138.767 268.708 135.637 268.708 134.656H267.111Z" fill="currentColor"/>
+      <path d="M769.981 108.698C772.622 108.698 774.771 110.846 774.771 113.485V228.791L779.193 233.639L779.255 233.701C780.913 235.542 779.623 238.426 777.167 238.426H734.79C732.333 238.426 731.043 235.542 732.701 233.701L737.123 228.853V118.271L732.701 113.423C731.043 111.582 732.333 108.698 734.79 108.698H769.981Z" fill="currentColor"/>
+      <path d="M61.6087 108.574C65.6007 108.574 69.102 111.212 70.146 115.078L93.2996 200.623C94.2822 204.489 94.4664 207.25 94.4664 208.048H96.2476C96.2476 207.312 96.6165 204.55 97.5992 200.623L120.569 115.14C121.613 111.335 125.113 108.635 129.105 108.635H174.492C176.949 108.635 178.238 111.519 176.58 113.36L172.65 117.717L184.442 228.912L184.503 228.851L188.802 233.576C190.46 235.417 189.171 238.301 186.714 238.301H143.354C140.898 238.301 139.608 235.417 141.266 233.576L145.688 228.728L140.099 149.811H138.502C138.318 150.977 138.134 154.107 137.335 157.667L114.365 238.301H73.5235L50.7383 157.667C50.0013 154.107 49.5715 150.977 49.3873 149.811H47.7903L42.3239 228.851L46.6235 233.576C48.2815 235.417 46.9917 238.301 44.5352 238.301H2.83358C0.376927 238.301 -0.912951 235.417 0.74529 233.576L5.16724 228.728L16.8979 117.901L12.7213 113.299C11.0632 111.458 12.3531 108.574 14.8096 108.574H61.6087Z" fill="currentColor"/>
+      </svg>
     </div>
-    <p class="preloader__tagline">comer bem, todo dia</p>
-  </div>
-  <div class="preloader__count" aria-hidden="true">
-    <span class="preloader__num" id="num">0</span><span class="preloader__pct">%</span>
-  </div>
-</div>
-
-<main class="stage">
-  <div class="deck" id="deck">
-    <div class="flipper" id="flipper">
-      <div class="face face--front" id="capa" aria-label="Capa">
-        <svg width="100%" height="100%" preserveAspectRatio="xMidYMid meet" id="capa-Camada_36" data-name="Camada 36" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 283.46 623.62">
-          
-          <rect class="cls-17" width="283.46" height="623.62"/>
-          <text class="cls-5" transform="translate(72.26 59.61)"><tspan class="cls-23" x="0" y="0">C</tspan><tspan class="cls-10" x="9.11" y="0">ardápio de Bebidas</tspan></text>
-          <g>
-            <text class="cls-2" transform="translate(72.39 511.35)"><tspan x="0" y="0">Segunda a S</tspan><tspan class="cls-18" x="92.33" y="0">á</tspan><tspan class="cls-14" x="101.1" y="0">b</tspan><tspan class="cls-13" x="110.97" y="0">ado</tspan></text>
-            <text class="cls-4" transform="translate(84.16 535.11)"><tspan class="cls-8" x="0" y="0">A</tspan><tspan x="7.46" y="0">lm</tspan><tspan class="cls-21" x="21.28" y="0">o</tspan><tspan class="cls-19" x="27.61" y="0">ç</tspan><tspan x="33.19" y="0">o: 11h30 às 14h</tspan><tspan class="cls-20" x="9.89" y="18.91">J</tspan><tspan class="cls-22" x="14.88" y="18.91">antar: 19h às 23h</tspan></text>
-            <text class="cls-3" transform="translate(93.73 592.84)"><tspan x="0" y="0">Dis</tspan><tspan class="cls-12" x="14.27" y="0">p</tspan><tspan x="20.16" y="0">oní</tspan><tspan class="cls-16" x="34.51" y="0">v</tspan><tspan x="39.46" y="0">el </tspan><tspan class="cls-11" x="49.56" y="0">p</tspan><tspan class="cls-9" x="55.45" y="0">elo i</tspan><tspan class="cls-1" x="73.86" y="0">F</tspan><tspan class="cls-12" x="79.4" y="0">oo</tspan><tspan x="90.25" y="0">d</tspan></text>
-          </g>
-          <rect class="cls-15" x="14.38" y="14.35" width="254.72" height="594.72" rx="10.34" ry="10.34"/>
-          <g>
-            <path class="cls-6" d="M175.17,267.86c.29-.31.81-.2.92.22l1.29,4.6c.04.16.16.29.31.36l4.07,1.7c.38.16.45.67.13.92l-3.8,2.97c-.11.07-.18.2-.2.34l-.6,4.18c-.05.38-.51.6-.83.38l-3.78-2.43c-.11-.09-.22-.09-.34-.09l-4.47.43c-.38.04-.69-.33-.56-.71l1.36-3.98c.05-.13.04-.27-.02-.4l-.02-.02-2.05-4.38c-.18-.36.11-.8.53-.76l4.4.34c.16,0,.33-.05.43-.18l3.24-3.51Z"/>
-            <path class="cls-6" d="M112.35,267.52c.13-.4.63-.52.92-.22l3.24,3.51c.11.13.27.18.43.18l4.4-.34c.4-.04.71.38.52.76l-2.05,4.38c-.05.13-.05.27-.02.4l1.36,3.98c.13.36-.16.74-.56.71l-4.47-.43c-.13,0-.24.02-.34.09l-3.78,2.43c-.34.22-.78,0-.83-.38l-.6-4.18c-.02-.13-.09-.25-.2-.34l-.02.02-3.8-2.97c-.33-.25-.25-.76.13-.92l4.07-1.7c.14-.07.27-.2.31-.36l1.29-4.6Z"/>
-            <path class="cls-6" d="M143.75,264.29c.2-.36.74-.36.94,0l2.32,4.18c.07.14.22.25.38.27l4.34.71c.42.07.6.54.34.87l-3,3.78c-.07.11-.11.24-.11.38l.4,4.2c.05.4-.33.69-.71.56l-4.25-1.48c-.13-.04-.25-.04-.36,0l-4.25,1.48c-.36.13-.74-.16-.71-.56l.4-4.2c.02-.13-.02-.27-.11-.38l-3-3.78c-.25-.33-.07-.8.34-.87l4.34-.71c.16-.04.31-.13.38-.27l2.32-4.18Z"/>
-            <path class="cls-7" d="M180.28,291.23c10.55,0,17.55,6.58,17.55,17.19s-7,17.28-17.55,17.28c-10.55,0-17.59-6.63-17.59-17.23,0-10.05,7.18-17.23,17.59-17.23ZM180.06,296.58c-4.67.08-7.61,4.56-7.48,11.97.14,7.59,3.24,11.83,7.91,11.75h-.02c4.62-.08,7.56-4.48,7.44-12.02-.13-7.54-3.18-11.78-7.85-11.7Z"/>
-            <path class="cls-7" d="M146.55,291.86c8.24,0,13.57,3.91,13.57,10.9s-6.23,11.31-13.52,11.31h-4.92v8.59l1.08,1.19c.42.47.09,1.21-.53,1.21h-10.77c-.63,0-.96-.74-.53-1.21l1.1-1.21v-28.39l-1.1-1.21c-.42-.47-.09-1.21.53-1.21h15.09v.02ZM141.66,307.81h5.16c3.18,0,5.85-1.73,5.85-5.62s-3.11-4.73-6.9-4.73h-4.1v10.35Z"/>
-            <path class="cls-6" d="M211.86,291.83c.63,0,.96.74.53,1.21l-1.13,1.24v21.21l.09,3.8,12.92-2.89h.02c.66-.09,1.23.46,1.16,1.12l-.68,7.05c-.03.27-.25.47-.52.47h-15.41v.03h-7.85c-.63,0-.96-.74-.53-1.21l1.12-1.24v-28.34l-1.12-1.24c-.42-.47-.09-1.21.53-1.21h10.85Z"/>
-            <path class="cls-7" d="M115.44,291.85c.97,0,1.84.61,2.15,1.52l10.12,29.22h.02l.02.02,1.13,1.24c.42.47.09,1.21-.53,1.21h-11.56c-.63,0-.96-.74-.53-1.21l1.13-1.24h.05l-1.37-4.52h-11.26l-1.35,4.57,1.08,1.19c.42.47.09,1.21-.53,1.21h-11.07c-.63,0-.96-.74-.53-1.21l1.13-1.24,9.86-28.31-1.13-1.24c-.42-.47-.09-1.21.53-1.21h12.64ZM110.24,298.49c0,.25-.16,1.05-.41,1.81l-3.47,11.5,1.86.93c1.38.71,3.03.71,4.43,0h.03l1.86-.93-3.47-11.5c-.2-.75-.41-1.56-.41-1.81h-.41Z"/>
-            <path class="cls-6" d="M238.97,291.85c.68,0,1.23.55,1.23,1.23v29.52l1.13,1.24.02.02c.42.47.09,1.21-.53,1.21h-10.85c-.63,0-.96-.74-.53-1.21l1.13-1.24v-28.31l-1.13-1.24c-.42-.47-.09-1.21.53-1.21h9.01Z"/>
-            <path class="cls-6" d="M57.63,291.82c1.02,0,1.92.68,2.19,1.67l5.93,21.9c.25.99.3,1.7.3,1.9h.46c0-.19.09-.9.35-1.9l5.88-21.88c.27-.97,1.16-1.67,2.19-1.67h11.62c.63,0,.96.74.53,1.21l-1.01,1.12,3.02,28.47.02-.02,1.1,1.21c.42.47.09,1.21-.53,1.21h-11.1c-.63,0-.96-.74-.53-1.21l1.13-1.24-1.43-20.2h-.41c-.05.3-.09,1.1-.3,2.01l-5.88,20.64h-10.46l-5.83-20.64c-.19-.91-.3-1.71-.35-2.01h-.41l-1.4,20.23,1.1,1.21c.42.47.09,1.21-.53,1.21h-10.68c-.63,0-.96-.74-.53-1.21l1.13-1.24,3-28.37-1.07-1.18c-.42-.47-.09-1.21.53-1.21h11.98Z"/>
-          </g>
-        </svg>
-      </div>
-      <div class="face face--back" id="verso" aria-label="Cardápio de bebidas" aria-hidden="true">
-        <svg width="100%" height="100%" preserveAspectRatio="xMidYMid meet" id="verso-Camada_36" data-name="Camada 36" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 283.46 623.62">
-          
-          <rect class="cls-27" y="0" width="283.46" height="623.62"/>
-          <g id="verso-Agrupar_3_copiar_4-5" data-name="Agrupar 3 copiar 4">
-            <text class="cls-16" transform="translate(28.96 47.79)"><tspan x="0" y="0">REFRIGERANTES</tspan></text>
-            <text id="verso-coca_coca_zero_guaraná_fanta_guaraná_fanta_zero_fanta_laran-2" data-name="coca, coca zero, guaraná fanta, guaraná fanta zero, fanta laran" class="cls-9" transform="translate(28.53 59.3)"><tspan class="cls-70" x="0" y="0">c</tspan><tspan class="cls-48" x="4.24" y="0">o</tspan><tspan class="cls-31" x="8.96" y="0">c</tspan><tspan class="cls-52" x="13.25" y="0">a, </tspan><tspan class="cls-70" x="22.67" y="0">c</tspan><tspan class="cls-48" x="26.91" y="0">o</tspan><tspan class="cls-31" x="31.63" y="0">c</tspan><tspan class="cls-36" x="35.92" y="0">a </tspan><tspan class="cls-70" x="42.77" y="0">z</tspan><tspan class="cls-52" x="46.96" y="0">er</tspan><tspan class="cls-46" x="55.21" y="0">o</tspan><tspan class="cls-36" x="59.65" y="0">, guaraná fanta, </tspan><tspan class="cls-36" x="0" y="8.4">guaraná fanta </tspan><tspan class="cls-35" x="57.21" y="8.4">z</tspan><tspan class="cls-36" x="61.4" y="8.4">er</tspan><tspan class="cls-29" x="69.65" y="8.4">o</tspan><tspan class="cls-36" x="74.09" y="8.4">, fanta laranja, </tspan><tspan class="cls-36" x="0" y="16.8">fanta laranja </tspan><tspan class="cls-35" x="53.29" y="16.8">z</tspan><tspan class="cls-36" x="57.48" y="16.8">er</tspan><tspan class="cls-29" x="65.73" y="16.8">o</tspan><tspan class="cls-36" x="70.17" y="16.8">, sprit</tspan><tspan class="cls-37" x="94.05" y="16.8">e</tspan><tspan class="cls-36" x="98.36" y="16.8">, sprite </tspan><tspan class="cls-70" x="129.02" y="16.8">z</tspan><tspan class="cls-36" x="133.21" y="16.8">er</tspan><tspan class="cls-29" x="141.46" y="16.8">o</tspan><tspan class="cls-52" x="145.9" y="16.8">, </tspan><tspan class="cls-36" x="0" y="25.2">cit</tspan><tspan class="cls-38" x="10.39" y="25.2">r</tspan><tspan class="cls-36" x="14.33" y="25.2">us </tspan><tspan class="cls-58" x="25.8" y="25.2">z</tspan><tspan class="cls-36" x="29.99" y="25.2">ero e tôni</tspan><tspan class="cls-31" x="67.89" y="25.2">c</tspan><tspan class="cls-52" x="72.18" y="25.2">a </tspan><tspan class="cls-35" x="79.02" y="25.2">z</tspan><tspan class="cls-36" x="83.21" y="25.2">ero</tspan></text>
-            <text class="cls-16" transform="translate(28.68 117.45)"><tspan x="0" y="0">ÁGUAS</tspan></text>
-            <text class="cls-20" transform="translate(28.45 129.49)"><tspan class="cls-54" x="0" y="0">sem </tspan><tspan class="cls-69" x="21.24" y="0">g</tspan><tspan class="cls-54" x="26.54" y="0">ás</tspan></text>
-            <text class="cls-20" transform="translate(28.51 141.11)"><tspan class="cls-63" x="0" y="0">c</tspan><tspan class="cls-60" x="4.98" y="0">om </tspan><tspan class="cls-3" x="21.56" y="0">g</tspan><tspan class="cls-54" x="26.86" y="0">ás</tspan></text>
-            <text class="cls-16" transform="translate(28.31 174.07)"><tspan x="0" y="0">SUCOS</tspan></text>
-            <text class="cls-20" transform="translate(28.46 187.1)"><tspan class="cls-59" x="0" y="0">F</tspan><tspan class="cls-51" x="5.67" y="0">r</tspan><tspan class="cls-54" x="10.4" y="0">uitz </tspan><tspan class="cls-34" x="31.04" y="0">L</tspan><tspan class="cls-54" x="36.79" y="0">aranja</tspan></text>
-            <text class="cls-20" transform="translate(28.46 200.04)"><tspan class="cls-59" x="0" y="0">F</tspan><tspan class="cls-51" x="5.67" y="0">r</tspan><tspan class="cls-54" x="10.4" y="0">uitz U</tspan><tspan class="cls-68" x="37.9" y="0">v</tspan><tspan class="cls-60" x="43.02" y="0">a</tspan></text>
-            <text class="cls-20" transform="translate(28.46 213)"><tspan class="cls-54" x="0" y="0">Limonada n</tspan><tspan class="cls-53" x="54.12" y="0">a</tspan><tspan class="cls-54" x="59.38" y="0">tural </tspan></text>
-            <text id="verso-Copo_350ml_-R_14_00_Jarra_1L_-R_36_00_Jarra_1_5L_-R_-2" data-name="Copo 350ml  -R$ 14,00 Jarra 1L     -R$ 36,00 Jarra 1,5L     -R$" class="cls-9" transform="translate(28.5 232.3)"><tspan class="cls-70" x="0" y="0">c</tspan><tspan class="cls-52" x="4.24" y="0">o</tspan><tspan class="cls-50" x="8.89" y="0">p</tspan><tspan class="cls-52" x="13.95" y="0">o</tspan><tspan class="cls-36"><tspan x="0" y="11">jarra</tspan></tspan><tspan class="cls-36"><tspan x="0" y="22">jarra</tspan></tspan></text>
-            <text class="cls-16" transform="translate(28.32 287.2)"><tspan x="0" y="0">CERVEJAS</tspan></text>
-            <text id="verso-_lata_350ml_Venda_de_bebidas_alcoólicas_proibida_para_menores-2" data-name="(lata 350ml)  Venda de bebidas alcoólicas proibida para menores" class="cls-11" transform="translate(28.43 221.27)"><tspan class="cls-49" x="0" y="0">(</tspan><tspan class="cls-63" x="2.57" y="0">f</tspan><tspan class="cls-66" x="5.19" y="0">eita na hora, se</tspan><tspan class="cls-64" x="57.39" y="0">r</tspan><tspan class="cls-66" x="60.83" y="0">vida </tspan><tspan class="cls-26" x="77.24" y="0">c</tspan><tspan class="cls-49" x="80.87" y="0">om </tspan><tspan class="cls-1" x="93.17" y="0">g</tspan><tspan class="cls-49" x="96.99" y="0">elo)</tspan></text>
-            <text id="verso-_lata_350ml_Venda_de_bebidas_alcoólicas_proibida_para_menores-3" data-name="(lata 350ml)  Venda de bebidas alcoólicas proibida para menores" class="cls-25" transform="translate(89.67 285.88)"><tspan class="cls-49" x="0" y="0">(</tspan><tspan class="cls-2" x="2.62" y="0">L</tspan><tspan class="cls-62" x="6.88" y="0">a</tspan><tspan class="cls-49" x="10.76" y="0">ta 350ml)</tspan></text>
-            <text id="verso-_lata_350ml_Venda_de_bebidas_alcoólicas_proibida_para_menores-4" data-name="(lata 350ml)  Venda de bebidas alcoólicas proibida para menores" class="cls-23" transform="translate(77.04 346.11)"><tspan x="0" y="0">(200ml)</tspan></text>
-            <text id="verso-_lata_350ml_Venda_de_bebidas_alcoólicas_proibida_para_menores-5" data-name="(lata 350ml)  Venda de bebidas alcoólicas proibida para menores" class="cls-23" transform="translate(76.44 403.48)"><tspan x="0" y="0">(350ml)</tspan></text>
-            <text class="cls-20" transform="translate(28.46 300.21)"><tspan class="cls-54" x="0" y="0">Heine</tspan><tspan class="cls-72" x="27.19" y="0">k</tspan><tspan class="cls-54" x="32.74" y="0">en</tspan></text>
-            <text class="cls-20" transform="translate(28.71 313.13)"><tspan class="cls-54" x="0" y="0">Am</tspan><tspan class="cls-3" x="14.88" y="0">s</tspan><tspan class="cls-54" x="19.64" y="0">tel</tspan></text>
-            <text class="cls-16" transform="translate(28.37 403.55)"><tspan x="0" y="0">DRINKS</tspan></text>
-            <text class="cls-16" transform="translate(28.66 346)"><tspan x="0" y="0">VINHOS</tspan></text>
-            <text id="verso-Venda_de_bebidas_alcoólicas_proibida_para_menores_de_18_anos.-2" data-name="Venda de bebidas alcoólicas proibida para menores de 18 anos." class="cls-13" transform="translate(31.58 552.56)"><tspan class="cls-45" x="0" y="0">*</tspan><tspan class="cls-57" x="3.37" y="0">V</tspan><tspan class="cls-66" x="7.63" y="0">enda de </tspan><tspan class="cls-39" x="36.05" y="0">b</tspan><tspan class="cls-49" x="40.3" y="0">ebidas al</tspan><tspan class="cls-26" x="70.71" y="0">c</tspan><tspan class="cls-44" x="74.35" y="0">o</tspan><tspan class="cls-49" x="78.39" y="0">óli</tspan><tspan class="cls-61" x="87.26" y="0">c</tspan><tspan class="cls-49" x="90.94" y="0">as proibida </tspan><tspan class="cls-44" x="131.14" y="0">p</tspan><tspan class="cls-49" x="135.48" y="0">ara menores de 18 ano</tspan><tspan class="cls-42" x="212.37" y="0">s</tspan><tspan class="cls-49" x="215.77" y="0">.</tspan></text>
-            <text class="cls-20" transform="translate(28.45 416.48)"><tspan class="cls-28" x="0" y="0">C</tspan><tspan class="cls-60" x="6.01" y="0">aipirinha</tspan></text>
-            <text class="cls-9" transform="translate(28.58 428.38)"><tspan class="cls-36" x="0" y="0">limão </tspan><tspan class="cls-70" x="24.57" y="0">c</tspan><tspan class="cls-52" x="28.81" y="0">om saqu</tspan><tspan class="cls-37" x="61.71" y="0">ê</tspan><tspan class="cls-36" x="66.02" y="0">.</tspan></text>
-            <text class="cls-20" transform="translate(28.52 358.97)"><tspan class="cls-74" x="0" y="0">T</tspan><tspan class="cls-60" x="6.02" y="0">a</tspan><tspan class="cls-53" x="11.3" y="0">ç</tspan><tspan class="cls-54" x="16.3" y="0">a</tspan></text>
-            <text class="cls-9" transform="translate(28.44 370.71)"><tspan class="cls-36" x="0" y="0">tinto ou bran</tspan><tspan class="cls-70" x="51.78" y="0">c</tspan><tspan class="cls-46" x="56.02" y="0">o</tspan><tspan class="cls-36" x="60.46" y="0">. ti</tspan><tspan class="cls-48" x="71.43" y="0">p</tspan><tspan class="cls-36" x="76.5" y="0">o le</tspan><tspan class="cls-70" x="90.72" y="0">v</tspan><tspan class="cls-37" x="95.09" y="0">e</tspan><tspan class="cls-36" x="99.4" y="0">.</tspan></text>
-            <text class="cls-20" transform="translate(28.45 441.3)"><tspan class="cls-54" x="0" y="0">Mos</tspan><tspan class="cls-63" x="18.13" y="0">c</tspan><tspan class="cls-65" x="23.1" y="0">o</tspan><tspan class="cls-54" x="28.37" y="0">w Mule</tspan></text>
-            <text class="cls-9" transform="translate(28.81 452.99)"><tspan class="cls-70" x="0" y="0">v</tspan><tspan class="cls-48" x="4.37" y="0">o</tspan><tspan class="cls-36" x="9.09" y="0">d</tspan><tspan class="cls-56" x="14.04" y="0">c</tspan><tspan class="cls-36" x="18.33" y="0">a, xaro</tspan><tspan class="cls-50" x="45.35" y="0">p</tspan><tspan class="cls-52" x="50.41" y="0">e de </tspan><tspan class="cls-41" x="68.92" y="0">g</tspan><tspan class="cls-36" x="73.39" y="0">engibr</tspan><tspan class="cls-42" x="99.11" y="0">e</tspan><tspan class="cls-52" x="103.42" y="0">, limã</tspan><tspan class="cls-29" x="125.92" y="0">o</tspan><tspan class="cls-52" x="130.36" y="0">, </tspan><tspan class="cls-36" x="0" y="8.4">açú</tspan><tspan class="cls-56" x="13.87" y="8.4">c</tspan><tspan class="cls-36" x="18.16" y="8.4">ar e espuma de </tspan><tspan class="cls-67" x="80.12" y="8.4">g</tspan><tspan class="cls-36" x="84.59" y="8.4">engibr</tspan><tspan class="cls-42" x="110.31" y="8.4">e</tspan><tspan class="cls-36" x="114.63" y="8.4">.</tspan></text>
-            <text class="cls-20" transform="translate(28.49 474.43)"><tspan class="cls-43" x="0" y="0">N</tspan><tspan class="cls-60" x="7" y="0">egroni</tspan></text>
-            <text id="verso-gin_campari_e_vermute._amargo_e_encorpado_servido_com_gelo_e-2" data-name="gin, campari e vermute. amargo e encorpado, servido com gelo e" class="cls-9" transform="translate(28.33 486.18)"><tspan class="cls-36" x="0" y="0">gi</tspan><tspan class="cls-50" x="7.41" y="0">n</tspan><tspan class="cls-52" x="12.66" y="0">, </tspan><tspan class="cls-56" x="17.56" y="0">c</tspan><tspan class="cls-36" x="21.85" y="0">am</tspan><tspan class="cls-71" x="33.74" y="0">p</tspan><tspan class="cls-36" x="38.8" y="0">ari e </tspan><tspan class="cls-35" x="59.13" y="0">v</tspan><tspan class="cls-52" x="63.5" y="0">ermut</tspan><tspan class="cls-55" x="87.33" y="0">e</tspan><tspan class="cls-36" x="91.64" y="0">.</tspan></text>
-            <rect class="cls-73" x="14.43" y="14.41" width="254.66" height="594.83" rx="10.34" ry="10.34"/>
-            <text class="cls-18" transform="translate(222.42 47.79)"><tspan x="0" y="0">R$ 9,00</tspan></text>
-            <text class="cls-18" transform="translate(222.24 129.57)"><tspan x="0" y="0">R$ 9,00</tspan></text>
-            <text class="cls-18" transform="translate(222.37 141.25)"><tspan x="0" y="0">R$ 9,00</tspan></text>
-            <text class="cls-18" transform="translate(222.46 188.35)"><tspan x="0" y="0">R$ 9,50</tspan></text>
-            <text class="cls-18" transform="translate(222.48 201.3)"><tspan x="0" y="0">R$ 9,50</tspan></text>
-            <text class="cls-18" transform="translate(217.06 232.42)"><tspan x="0" y="0">R$ 14,00</tspan></text>
-            <text class="cls-18" transform="translate(217.06 243.4)"><tspan x="0" y="0">R$ 36,00</tspan></text>
-            <text class="cls-18" transform="translate(217.05 254.43)"><tspan x="0" y="0">R$ 49,00</tspan></text>
-            <text class="cls-18" transform="translate(222.47 300.21)"><tspan x="0" y="0">R$ 9,90</tspan></text>
-            <text class="cls-18" transform="translate(222.43 313.13)"><tspan x="0" y="0">R$ 6,90</tspan></text>
-            <text class="cls-18" transform="translate(217.09 358.97)"><tspan x="0" y="0">R$ 20,00</tspan></text>
-            <text class="cls-18" transform="translate(217.07 416.58)"><tspan x="0" y="0">R$ 24,00</tspan></text>
-            <text class="cls-18" transform="translate(217.06 441.3)"><tspan x="0" y="0">R$ 29,00</tspan></text>
-            <text class="cls-18" transform="translate(217.11 474.43)"><tspan x="0" y="0">R$ 29,00</tspan></text>
-            <text class="cls-24" transform="translate(28.55 497.24)"><tspan class="cls-15" x="0" y="0">não al</tspan><tspan class="cls-17" x="24.5" y="0">c</tspan><tspan class="cls-21" x="28.85" y="0">o</tspan><tspan class="cls-19" x="33.66" y="0">óli</tspan><tspan class="cls-17" x="44.32" y="0">c</tspan><tspan class="cls-15" x="48.67" y="0">o:</tspan><tspan class="cls-12" x="56.19" y="0"> </tspan><tspan class="cls-5" x="58.51" y="0">á</tspan><tspan class="cls-12" x="63" y="0">gua </tspan><tspan class="cls-7" x="79.39" y="0">c</tspan><tspan class="cls-4" x="83.63" y="0">om </tspan><tspan class="cls-10" x="97.97" y="0">g</tspan><tspan class="cls-4" x="102.46" y="0">á</tspan><tspan class="cls-8" x="106.98" y="0">s</tspan><tspan class="cls-12" x="110.96" y="0">, </tspan><tspan class="cls-6"><tspan class="cls-36" x="0" y="8.4">xaro</tspan><tspan class="cls-48" x="17.6" y="8.4">p</tspan><tspan class="cls-14" x="22.66" y="8.4">e de </tspan><tspan class="cls-41" x="41.17" y="8.4">g</tspan><tspan class="cls-36" x="45.63" y="8.4">engibr</tspan><tspan class="cls-42" x="71.36" y="8.4">e</tspan><tspan class="cls-36" x="75.67" y="8.4">, limã</tspan><tspan class="cls-40" x="98.17" y="8.4">o</tspan><tspan class="cls-36" x="102.6" y="8.4">, açú</tspan><tspan class="cls-30" x="121.37" y="8.4">c</tspan><tspan class="cls-36" x="125.66" y="8.4">ar e </tspan></tspan><tspan class="cls-6"><tspan class="cls-36" x="0" y="16.8">espuma de </tspan><tspan class="cls-41" x="44.54" y="16.8">g</tspan><tspan class="cls-36" x="49.01" y="16.8">engibr</tspan><tspan class="cls-42" x="74.73" y="16.8">e</tspan><tspan class="cls-14" x="79.04" y="16.8">.</tspan></tspan></text>
-            <text class="cls-25" transform="translate(130.91 47.79)"><tspan class="cls-47" x="0" y="0">(</tspan><tspan class="cls-2" x="2.62" y="0">L</tspan><tspan class="cls-1" x="6.88" y="0">a</tspan><tspan class="cls-66" x="10.76" y="0">ta 350ml)</tspan></text>
-            <text class="cls-22" transform="translate(70.7 117.36)"><tspan x="0" y="0">(350ml)</tspan></text>
-            <text class="cls-22" transform="translate(69.45 174.07)"><tspan x="0" y="0">(300ml)</tspan></text>
-            <text class="cls-22" transform="translate(50.11 232.38)"><tspan x="0" y="0">(350ml)</tspan></text>
-            <text class="cls-22" transform="translate(51.03 243.37)"><tspan x="0" y="0">(1L)</tspan></text>
-            <text class="cls-22" transform="translate(51.03 254.44)"><tspan x="0" y="0">(1,5L)</tspan></text>
-          </g>
-          <g>
-            <path class="cls-32" d="M152.38,564.68c.09-.1.26-.06.29.07l.41,1.46c.01.05.05.09.1.12l1.29.54c.12.05.14.21.04.29l-1.21.94s-.06.06-.06.11l-.19,1.33c-.02.12-.16.19-.26.12l-1.2-.77s-.07-.03-.11-.03l-1.42.14c-.12.01-.22-.1-.18-.22l.43-1.27s.01-.09,0-.13h0s-.65-1.4-.65-1.4c-.06-.12.03-.25.17-.24l1.4.11c.05,0,.1-.02.14-.06l1.03-1.12Z"/>
-            <path class="cls-32" d="M132.4,564.57c.04-.13.2-.17.29-.07l1.03,1.12s.09.06.14.06l1.4-.11c.13-.01.22.12.17.24l-.65,1.39s-.02.09,0,.13l.43,1.27c.04.12-.05.24-.18.22l-1.42-.14s-.07,0-.11.03l-1.2.77c-.11.07-.25,0-.26-.12l-.19-1.33s-.03-.08-.06-.11h0s-1.21-.94-1.21-.94c-.1-.08-.08-.24.04-.29l1.29-.54s.09-.06.1-.12l.41-1.46Z"/>
-            <path class="cls-32" d="M142.39,563.54c.06-.12.24-.12.3,0l.74,1.33s.07.08.12.09l1.38.22c.13.02.19.17.11.28l-.96,1.2s-.03.07-.03.12l.13,1.33c.02.13-.1.22-.22.18l-1.35-.47s-.08-.01-.12,0l-1.35.47c-.12.04-.24-.05-.22-.18l.13-1.33s0-.09-.03-.12l-.96-1.2c-.08-.1-.02-.25.11-.28l1.38-.22c.05-.01.1-.04.12-.09l.74-1.33Z"/>
-            <path class="cls-33" d="M154,572.11c3.35,0,5.58,2.09,5.58,5.46s-2.22,5.49-5.58,5.49c-3.35,0-5.59-2.11-5.59-5.48,0-3.2,2.28-5.48,5.59-5.48ZM153.93,573.81c-1.48.02-2.42,1.45-2.38,3.81.05,2.41,1.03,3.76,2.51,3.74h0c1.47-.02,2.4-1.42,2.36-3.82-.04-2.4-1.01-3.75-2.49-3.72Z"/>
-            <path class="cls-33" d="M143.28,572.31c2.62,0,4.31,1.24,4.31,3.47s-1.98,3.6-4.3,3.6h-1.56v2.73l.34.38c.13.15.03.38-.17.38h-3.42c-.2,0-.3-.23-.17-.38l.35-.38v-9.02l-.35-.38c-.13-.15-.03-.38.17-.38h4.8ZM141.72,577.38h1.64c1.01,0,1.86-.55,1.86-1.79s-.99-1.5-2.19-1.5h-1.3v3.29Z"/>
-            <path class="cls-32" d="M164.04,572.3c.2,0,.3.23.17.38l-.36.39v6.74l.03,1.21,4.11-.92h0c.21-.03.39.14.37.35l-.21,2.24c-.01.08-.08.15-.16.15h-4.9s-2.49.01-2.49.01c-.2,0-.3-.23-.17-.38l.35-.39v-9.01l-.35-.39c-.13-.15-.03-.38.17-.38h3.45Z"/>
-            <path class="cls-33" d="M133.39,572.3c.31,0,.58.19.68.48l3.22,9.29h.01s.36.4.36.4c.13.15.03.38-.17.38h-3.67c-.2,0-.3-.23-.17-.38l.36-.39h.01l-.43-1.44h-3.58l-.43,1.45.34.38c.13.15.03.38-.17.38h-3.52c-.2,0-.3-.23-.17-.38l.36-.39,3.13-9-.36-.39c-.13-.15-.03-.38.17-.38h4.02ZM131.73,574.42c0,.08-.05.33-.13.57l-1.1,3.66.59.29c.44.22.96.22,1.41,0h.01l.59-.29-1.1-3.66c-.06-.24-.13-.49-.13-.57h-.13Z"/>
-            <path class="cls-32" d="M172.66,572.3c.21,0,.39.17.39.39v9.38l.36.39h0c.13.15.03.39-.17.39h-3.45c-.2,0-.3-.23-.17-.38l.36-.39v-9l-.36-.39c-.13-.15-.03-.38.17-.38h2.86Z"/>
-            <path class="cls-32" d="M115.01,572.29c.32,0,.61.21.69.53l1.88,6.96c.08.31.09.54.09.6h.14c0-.06.03-.28.11-.6l1.87-6.96c.08-.31.37-.53.69-.53h3.69c.2,0,.3.23.17.38l-.32.35.96,9.05h0s.35.38.35.38c.13.15.03.38-.17.38h-3.53c-.2,0-.3-.23-.17-.38l.36-.39-.45-6.42h-.13c-.01.09-.03.35-.09.64l-1.87,6.56h-3.32l-1.85-6.56c-.06-.29-.09-.54-.11-.64h-.13l-.44,6.43.35.38c.13.15.03.38-.17.38h-3.39c-.2,0-.3-.23-.17-.38l.36-.39.95-9.02-.34-.37c-.13-.15-.03-.38.17-.38h3.81Z"/>
-          </g>
-        </svg>
-      </div>
-    </div>
-  </div>
-</main>
-
-<div class="bar" id="bar">
-  <button type="button" id="flipBtn" aria-controls="flipper">Verso</button>
-</div>
-
-<script>
-(function () {
-  var preloader = document.getElementById('preloader');
-  var fill = document.getElementById('fill');
-  var num = document.getElementById('num');
-  var deck = document.getElementById('deck');
-  var bar = document.getElementById('bar');
-  var flipper = document.getElementById('flipper');
-  var btn = document.getElementById('flipBtn');
-  var capa = document.getElementById('capa');
-  var verso = document.getElementById('verso');
-
-  // ---- virar ----
-
-  var flipped = false;
-
-  function flip() {
-    flipped = !flipped;
-    flipper.classList.toggle('is-flipped', flipped);
-    btn.textContent = flipped ? 'Capa' : 'Verso';
-    // A face escondida sai da arvore de acessibilidade e do alcance do leitor.
-    capa.setAttribute('aria-hidden', flipped ? 'true' : 'false');
-    verso.setAttribute('aria-hidden', flipped ? 'false' : 'true');
-  }
-
-  btn.addEventListener('click', flip);
-  flipper.addEventListener('click', flip);
-
-  // ---- preloader ----
-
-  // Nao ha imagem externa pra esperar: os SVGs sao inline e a unica carga de
-  // rede e a fonte. O contador anda sozinho ate 92% e so fecha quando a fonte
-  // resolve, com um piso de tempo pra barra nao dar um flash e sumir.
-  var MIN_MS = 1100;
-  var MAX_MS = 3500;
-  var SPEED = 150;            // pontos de porcentagem por segundo
-  var started = performance.now();
-  var last = started;
-  var progress = 0;
-  var ready = false;
-  var finished = false;
-
-  var fontsReady = document.fonts && document.fonts.ready
-    ? document.fonts.ready
-    : Promise.resolve();
-
-  var windowReady = document.readyState === 'complete'
-    ? Promise.resolve()
-    : new Promise(function (r) { window.addEventListener('load', r, { once: true }); });
-
-  Promise.all([fontsReady, windowReady]).then(function () { ready = true; });
-
-  function paint() {
-    var pct = Math.round(progress);
-    num.textContent = pct;
-    fill.style.setProperty('--fill', pct + '%');
-  }
-
-  function tick(now) {
-    if (finished) return;
-
-    var elapsed = now - started;
-    // O avanco e por tempo decorrido, nao por quadro: com requestAnimationFrame
-    // estrangulado (aba em segundo plano, aparelho fraco) o contador continua
-    // levando o mesmo tempo em vez de arrastar.
-    var step = (now - last) / 1000 * SPEED;
-    last = now;
-
-    // Sem sinal de pronto o contador para em 92; com sinal, corre pro fim.
-    var target = (ready || elapsed > MAX_MS) ? 100 : 92;
-    progress = Math.min(target, progress + step);
-    paint();
-
-    if (progress >= 100 && elapsed >= MIN_MS) {
-      done();
-      return;
-    }
-    requestAnimationFrame(tick);
-  }
-
-  function done() {
-    if (finished) return;
-    finished = true;
-    progress = 100;
-    paint();
-
-    // Deixa o 100% respirar antes da cortina subir.
-    setTimeout(function () {
-      preloader.classList.add('is-done');
-      deck.classList.add('is-in');
-      bar.classList.add('is-in');
-      setTimeout(function () { preloader.remove(); }, 1200);
-    }, 260);
-  }
-
-  // Trava de seguranca: um cardapio de mesa nao pode ficar preso atras da
-  // cortina se o rAF nunca rodar ou a fonte nunca resolver.
-  setTimeout(done, MAX_MS + 600);
-
-  requestAnimationFrame(function () {
-    preloader.classList.add('is-in');
-    last = performance.now();
-    requestAnimationFrame(tick);
-  });
-})();
-</script>
-
+    <div class="risco"></div>
+    <h1>Cardápio indisponível no momento</h1>
+    <p>Estamos atualizando. Enquanto isso, é só pedir o cardápio ao nosso atendimento.</p>
+  </main>
 </body>
 </html>

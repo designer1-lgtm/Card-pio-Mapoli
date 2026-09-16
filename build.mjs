@@ -10,6 +10,20 @@
 
 import { readFileSync, writeFileSync } from 'node:fs';
 
+// ---------------------------------------------------------------------------
+// LIGA E DESLIGA O CARDAPIO.
+//
+// false  -> a URL serve uma pagina de "indisponivel no momento"
+// true   -> a URL serve o cardapio
+//
+// A URL nunca muda, entao o QR code impresso continua valendo nos dois casos.
+// Pra religar: troca pra true, roda `node build.mjs` e publica.
+//
+// O cardapio nao fica acessivel por outro caminho enquanto estiver desligado:
+// a pagina de indisponivel toma o lugar do index.html, nao fica ao lado dele.
+// ---------------------------------------------------------------------------
+const ATIVO = false;
+
 const PAGES = [
   { scope: 'capa', file: 'svg/Capa.svg' },
   { scope: 'verso', file: 'svg/Verso.svg' },
@@ -432,9 +446,83 @@ ${indent(verso.svg, '        ')}
 </html>
 `;
 
-writeFileSync('index.html', html);
-console.log('index.html gerado —', (html.length / 1024).toFixed(0) + ' KB');
-for (const p of built) {
-  console.log(`  ${p.scope.padEnd(6)} svg ${(p.svg.length / 1024).toFixed(0)} KB · css ${p.css.split('\n').filter(Boolean).length} regras`);
+// Pagina servida quando ATIVO e false. Mesma marca, mesmas cores, pra quem
+// escaneia o QR nao achar que caiu num site quebrado.
+const htmlIndisponivel = `<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Mápoli — Cardápio de Bebidas</title>
+<meta name="description" content="O cardápio de bebidas do Mápoli está temporariamente indisponível." />
+<meta name="robots" content="noindex" />
+<meta name="theme-color" content="#442924" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;600&display=swap" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='16' fill='%23442924'/%3E%3Ctext x='50' y='73' font-family='serif' font-size='68' font-weight='700' text-anchor='middle' fill='%23e73439'%3EM%3C/text%3E%3C/svg%3E" />
+<style>
+  :root { --brown: #442924; --cream: #f7eeeb; --tan: #d7c0ad; --red: #e73439; }
+
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+
+  body {
+    background: radial-gradient(120% 75% at 50% 0%, #56342d 0%, var(--brown) 48%, #3a211c 100%) #3a211c;
+    color: var(--cream);
+    font-family: 'IBM Plex Serif', Georgia, serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px max(24px, env(safe-area-inset-left)) calc(32px + env(safe-area-inset-bottom));
+    -webkit-text-size-adjust: 100%;
+  }
+
+  main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(26px, 5vw, 38px);
+    text-align: center;
+    max-width: 420px;
+    animation: sobe .8s cubic-bezier(.22, 1, .36, 1) both;
+  }
+
+  .marca { width: clamp(170px, 48vw, 240px); color: var(--red); }
+  .marca svg { display: block; width: 100%; height: auto; aspect-ratio: 780 / 252; }
+
+  .risco { width: 46px; height: 1px; background: var(--tan); opacity: .45; }
+
+  h1 { margin: 0; font-size: clamp(19px, 5vw, 24px); font-weight: 600; line-height: 1.3; }
+  p { margin: 0; color: var(--tan); font-size: clamp(14px, 3.7vw, 16px); line-height: 1.65; }
+
+  @keyframes sobe { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { main { animation: none; } }
+</style>
+</head>
+<body>
+  <main>
+    <div class="marca">
+${indent(wordmark, '      ')}
+    </div>
+    <div class="risco"></div>
+    <h1>Cardápio indisponível no momento</h1>
+    <p>Estamos atualizando. Enquanto isso, é só pedir o cardápio ao nosso atendimento.</p>
+  </main>
+</body>
+</html>
+`;
+
+const saida = ATIVO ? html : htmlIndisponivel;
+writeFileSync('index.html', saida);
+
+if (ATIVO) {
+  console.log('CARDAPIO ATIVO — index.html gerado —', (saida.length / 1024).toFixed(0) + ' KB');
+  for (const p of built) {
+    console.log(`  ${p.scope.padEnd(6)} svg ${(p.svg.length / 1024).toFixed(0)} KB · css ${p.css.split('\n').filter(Boolean).length} regras`);
+  }
+  console.log(`  wordmark ${(wordmark.length / 1024).toFixed(1)} KB (x2 no preloader)`);
+} else {
+  console.log('CARDAPIO DESLIGADO — index.html e a pagina de indisponivel —', (saida.length / 1024).toFixed(0) + ' KB');
+  console.log('  a arte continua em svg/ e o cardapio volta com ATIVO = true no topo deste arquivo');
 }
-console.log(`  wordmark ${(wordmark.length / 1024).toFixed(1)} KB (x2 no preloader)`);
