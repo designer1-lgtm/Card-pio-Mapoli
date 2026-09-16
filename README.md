@@ -20,6 +20,24 @@ cartão também vira.
 `assinatura.svg` é a versão vetorial da mesma marca que está embutida como PNG
 dentro da `Capa.svg`. O logotipo não tem acento no "A" — é assim mesmo.
 
+## Ligar e desligar o cardápio
+
+No topo do `build.mjs` existe uma chave:
+
+```js
+const ATIVO = false;
+```
+
+- `true` — a URL serve o cardápio
+- `false` — a URL serve uma página de "indisponível no momento"
+
+Depois de trocar, rode `node build.mjs` e publique com `vercel --prod`.
+
+**A URL nunca muda nos dois casos.** É o que permite desligar o cardápio sem
+invalidar o QR code impresso. A página de indisponível toma o lugar do
+`index.html` em vez de ficar ao lado dele, então o cardápio também não fica
+acessível por outro caminho enquanto está desligado.
+
 ## Como atualizar o cardápio
 
 1. Exporte a nova arte do Illustrator em SVG e substitua `svg/Capa.svg` e/ou
